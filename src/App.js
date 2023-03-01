@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Routes, Route, useSearchParams, BrowserRouter } from "react-router-dom";
+import LicenseInfo from "./license-info";
+import Receipt from "./receipt";
 
-function App() {
+const App = () => {
+  const [queryParameters] = useSearchParams();
+  console.log(queryParameters.get("type"));
+  console.log(queryParameters.get("ref"));
+
+  const showDisplayName = () => {
+    if(queryParameters.get("type")==='info'){
+      return <LicenseInfo/>
+    }
+    else if(queryParameters.get("type")==='receipt'){
+      return <Receipt/>
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={showDisplayName()} />
+    </Routes>
   );
-}
+};
 
 export default App;
